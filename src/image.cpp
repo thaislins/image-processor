@@ -17,14 +17,6 @@ Image::~Image() {
 
 }    
 
-/*Image::Image(const Image& oldImage) {
-
-}
-
-void Image::operator=(const Image&) {
-
-}*/
-
 int Image::getNumberRows() {
     return number_rows;
 }
@@ -55,5 +47,20 @@ matrix Image::getPixels() {
 
 void Image::setPixels(matrix pix) {
     pixels = pix;
+}
+
+void Image::imgThresholding() {
+    for(int i = 0; i < number_cols; ++i) {
+        for(int j = 0; j < number_rows; ++j){
+            int rgb_value = 0;
+            if (((pixels[i][j].getR() + pixels[i][j].getG() + pixels[i][j].getB())/3) > 127) {
+                rgb_value = max_color;
+            } 
+
+            pixels[i][j].setR(rgb_value);
+            pixels[i][j].setG(rgb_value);
+            pixels[i][j].setB(rgb_value);  
+        }
+    }
 }
 

@@ -30,6 +30,13 @@ public:
     void setMaxColor(int maxColor);
     matrix getPixels();
     void setPixels(matrix pix);
+
+    void imgThresholding();
+    void imgBlurring();
+    void imgSharpening();
+    void imgRotate();
+    void imgAmplify();
+    void imdReduce();
 };
 
 #endif
