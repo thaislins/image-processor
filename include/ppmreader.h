@@ -1,4 +1,4 @@
-#include <sstream>
+#include <fstream>
 using std::ifstream;
 
 #include <string>
@@ -9,12 +9,12 @@ using std::string;
 #ifndef PPMREADER_H
 #define PPMREADER_H
 
-class PPMreader {
+class PPMReader {
 protected:
     ifstream image_file;
     string filename;
 public:
-    PPMreader(string f_name);
+    PPMReader(string f_name);
     Image readFile();
 };
 
