@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <vector>
 using std::vector;
 
@@ -49,6 +51,17 @@ void Image::setPixels(matrix pix) {
     pixels = pix;
 }
 
+void Image::copy_pixels(matrix &temp, matrix &old) {
+
+    for (int i = 0; i < number_cols; ++i) {
+        for (int j = 0; j < number_rows; ++j) {
+            temp[i][j].setR(old[i][j].getR());
+            temp[i][j].setG(old[i][j].getG());
+            temp[i][j].setB(old[i][j].getB());
+        }
+    }
+}
+
 void Image::imgThresholding() {
     for(int i = 0; i < number_cols; ++i) {
         for(int j = 0; j < number_rows; ++j){
@@ -64,3 +77,26 @@ void Image::imgThresholding() {
     }
 }
 
+void Image::imgBlurring() {
+
+    Pixel p;
+    matrix temp(number_cols,vector<Pixel>(number_rows, p));
+
+    copy_pixels(temp, pixels);
+
+    for (int i = 1; i < number_cols - 1; ++i) {
+        for (int j = 1; j < number_rows - 1; ++j) { 
+            pixels[i][j].setR((temp[i][j].getR() + temp[i-1][j-1].getR() + temp[i-1][j].getR() + 
+                           temp[i-1][j+1].getR() + temp[i][j-1].getR() + temp[i][j+1].getR() +
+                           temp[i+1][j-1].getR() + temp[i+1][j].getR() + temp[i+1][j+1].getR())/9);
+
+            pixels[i][j].setG((temp[i][j].getG() + temp[i-1][j-1].getG() + temp[i-1][j].getG() + 
+                           temp[i-1][j+1].getG() + temp[i][j-1].getG() + temp[i][j+1].getG() +
+                           temp[i+1][j-1].getG() + temp[i+1][j].getG() + temp[i+1][j+1].getG())/9);
+
+            pixels[i][j].setB((temp[i][j].getB() + temp[i-1][j-1].getB() + temp[i-1][j].getB() + 
+                           temp[i-1][j+1].getB() + temp[i][j-1].getB() + temp[i][j+1].getB() +
+                           temp[i+1][j-1].getB() + temp[i+1][j].getB() + temp[i+1][j+1].getB())/9);
+        }
+    }
+}

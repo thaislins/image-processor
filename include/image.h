@@ -18,9 +18,7 @@ protected:
 public:
     Image();                           //constructor
     Image(int numRows, int numCols, int maxColor);   //constructor
-    ~Image();                      
-  /*Image(const Image& oldImage);            
-    void operator=(const Image&);*/              
+    ~Image();                                 
 
     int getNumberRows();
     void setNumberRows(int numRows);
@@ -31,6 +29,7 @@ public:
     matrix getPixels();
     void setPixels(matrix pix);
 
+    void copy_pixels(matrix &temp, matrix &old);
     void imgThresholding();
     void imgBlurring();
     void imgSharpening();
