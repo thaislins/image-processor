@@ -25,12 +25,12 @@ Image PPMReader::readFile() {
         exit(1);
     }
 
-    image_file >> header >> number_cols >> number_rows >> max_color;
-    Image ppm_image(number_cols,number_rows,max_color);
-    matrix pixels(number_cols,vector<Pixel>(number_rows, p));
+    image_file >> header >> number_rows >> number_cols >> max_color;
+    Image ppm_image(number_rows,number_cols,max_color);
+    matrix pixels(number_rows,vector<Pixel>(number_cols, p));
 
-    for(int i = 0; i < number_cols; ++i) {
-        for(int j = 0; j < number_rows; ++j){
+    for(int i = 0; i < number_rows; ++i) {
+        for(int j = 0; j < number_cols; ++j){
             image_file >> R >> G >> B;
             pixels[i][j].setR(R);
             pixels[i][j].setG(G);

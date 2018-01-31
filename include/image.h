@@ -16,8 +16,8 @@ protected:
     matrix pixels;                     //2D array
 
 public:
-    Image();                           //constructor
-    Image(int numRows, int numCols, int maxColor);   //constructor
+    Image();                           
+    Image(int numRows, int numCols, int maxColor);   
     ~Image();                                 
 
     int getNumberRows();
@@ -35,8 +35,7 @@ public:
     void imgSharpening();
     void imgRotate(int angle);
     matrix rotate90(matrix temp);
-    void imgAmplify();
-    void imdReduce();
+    void borderDetection();
 };
 
 #endif

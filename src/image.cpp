@@ -52,8 +52,8 @@ void Image::setPixels(matrix pix) {
 }
 
 void Image::copy_pixels(matrix &temp, matrix &old) {
-    for (int i = 0; i < number_cols; ++i) {
-        for (int j = 0; j < number_rows; ++j) {
+    for (int i = 0; i < number_rows; ++i) {
+        for (int j = 0; j < number_cols; ++j) {
             temp[i][j].setR(old[i][j].getR());
             temp[i][j].setG(old[i][j].getG());
             temp[i][j].setB(old[i][j].getB());
@@ -62,8 +62,8 @@ void Image::copy_pixels(matrix &temp, matrix &old) {
 }
 
 void Image::imgThresholding() {
-    for (int i = 0; i < number_cols; ++i) {
-        for (int j = 0; j < number_rows; ++j){
+    for (int i = 0; i < number_rows; ++i) {
+        for (int j = 0; j < number_cols; ++j){
             int rgb_value = 0;
             if (((pixels[i][j].getR() + pixels[i][j].getG() + pixels[i][j].getB())/3) > 127) {
                 rgb_value = max_color;
@@ -78,12 +78,12 @@ void Image::imgThresholding() {
 
 void Image::imgBlurring() {
     Pixel p;
-    matrix temp(number_cols,vector<Pixel>(number_rows, p));
+    matrix temp(number_rows,vector<Pixel>(number_cols, p));
 
     copy_pixels(temp, pixels);
 
-    for (int i = 1; i < number_cols - 1; ++i) {
-        for (int j = 1; j < number_rows - 1; ++j) { 
+    for (int i = 1; i < number_rows - 1; ++i) {
+        for (int j = 1; j < number_cols - 1; ++j) { 
             pixels[i][j].setR((temp[i][j].getR() + temp[i-1][j-1].getR() + temp[i-1][j].getR() + 
              temp[i-1][j+1].getR() + temp[i][j-1].getR() + temp[i][j+1].getR() +
              temp[i+1][j-1].getR() + temp[i+1][j].getR() + temp[i+1][j+1].getR())/9);
@@ -101,12 +101,12 @@ void Image::imgBlurring() {
 
 void Image::imgSharpening() {
     Pixel p;
-    matrix temp(number_cols,vector<Pixel>(number_rows, p));
+    matrix temp(number_rows,vector<Pixel>(number_cols, p));
 
     copy_pixels(temp, pixels);
 
-    for (int i = 1; i < number_cols - 1; ++i) {
-        for (int j = 1; j < number_rows - 1; ++j) { 
+    for (int i = 1; i < number_rows - 1; ++i) {
+        for (int j = 1; j < number_cols - 1; ++j) { 
             pixels[i][j].setR(5*temp[i][j].getR() - temp[i-1][j-1].getR()  
              - temp[i-1][j+1].getR() - temp[i+1][j-1].getR() - temp[i+1][j+1].getR());
             pixels[i][j].setR(pixels[i][j].getR() < 0 ? 0 : pixels[i][j].getR()); 
@@ -128,7 +128,7 @@ void Image::imgSharpening() {
 
 void Image::imgRotate(int angle) {
     Pixel p;
-    matrix temp(number_cols,vector<Pixel>(number_rows, p));
+    matrix temp(number_rows,vector<Pixel>(number_cols, p));
 
     copy_pixels(temp, pixels);
 
@@ -146,11 +146,38 @@ void Image::imgRotate(int angle) {
 }
 
 matrix Image::rotate90(matrix temp) {
-    for (int i = 1; i < number_cols - 1; ++i) {
-        for (int j = 1; j < number_rows - 1; ++j) { 
+    for (int i = 1; i < number_rows - 1; ++i) {
+        for (int j = 1; j < number_cols - 1; ++j) { 
             pixels[i][j] = temp[number_rows-j-1][i];
         }
     }
 
     return pixels;
+}
+
+void Image::borderDetection() {
+    Pixel p;
+    matrix temp(number_rows,vector<Pixel>(number_cols, p));
+
+    copy_pixels(temp, pixels);
+
+    for (int i = 1; i < number_cols - 1; ++i) {
+        for (int j = 1; j < number_rows - 1; ++j) { 
+            pixels[i][j].setR(8*temp[i][j].getR() - temp[i-1][j-1].getR()  
+             - temp[i-1][j+1].getR() - temp[i+1][j-1].getR() - temp[i+1][j+1].getR());
+            pixels[i][j].setR(pixels[i][j].getR() < 0 ? 0 : pixels[i][j].getR()); 
+            pixels[i][j].setR(pixels[i][j].getR() > max_color ? max_color : pixels[i][j].getR());
+
+            pixels[i][j].setG(8*temp[i][j].getG() - temp[i-1][j-1].getG()  
+             - temp[i-1][j+1].getG() - temp[i+1][j-1].getG() - temp[i+1][j+1].getG());
+            pixels[i][j].setG(pixels[i][j].getG() < 0 ? 0 : pixels[i][j].getG()); 
+            pixels[i][j].setG(pixels[i][j].getG() > max_color ? max_color : pixels[i][j].getG());
+
+
+            pixels[i][j].setB(8*temp[i][j].getB() - temp[i-1][j-1].getB()  
+               - temp[i-1][j+1].getB() - temp[i+1][j-1].getB() - temp[i+1][j+1].getB());
+            pixels[i][j].setB(pixels[i][j].getB() < 0 ? 0 : pixels[i][j].getB()); 
+            pixels[i][j].setB(pixels[i][j].getB() > max_color ? max_color : pixels[i][j].getB());
+        }
+    }
 }
