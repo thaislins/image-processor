@@ -33,7 +33,8 @@ public:
     void imgThresholding();
     void imgBlurring();
     void imgSharpening();
-    void imgRotate();
+    void imgRotate(int angle);
+    matrix rotate90(matrix temp);
     void imgAmplify();
     void imdReduce();
 };
