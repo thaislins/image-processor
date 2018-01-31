@@ -5,7 +5,7 @@ Pixel::Pixel() {
 }
 
 Pixel::~Pixel() {
-    
+
 }
 
 int Pixel::getR() {

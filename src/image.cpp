@@ -100,3 +100,31 @@ void Image::imgBlurring() {
         }
     }
 }
+
+void Image::imgSharpening() {
+
+    Pixel p;
+    matrix temp(number_cols,vector<Pixel>(number_rows, p));
+
+    copy_pixels(temp, pixels);
+
+    for (int i = 1; i < number_cols - 1; ++i) {
+        for (int j = 1; j < number_rows - 1; ++j) { 
+            pixels[i][j].setR(5*temp[i][j].getR() - temp[i-1][j-1].getR()  
+                           - temp[i-1][j+1].getR() - temp[i+1][j-1].getR() - temp[i+1][j+1].getR());
+            pixels[i][j].setR(pixels[i][j].getR() < 0 ? 0 : pixels[i][j].getR()); 
+            pixels[i][j].setR(pixels[i][j].getR() > max_color ? max_color : pixels[i][j].getR());
+
+            pixels[i][j].setG(5*temp[i][j].getG() - temp[i-1][j-1].getG()  
+                           - temp[i-1][j+1].getG() - temp[i+1][j-1].getG() - temp[i+1][j+1].getG());
+            pixels[i][j].setG(pixels[i][j].getG() < 0 ? 0 : pixels[i][j].getG()); 
+            pixels[i][j].setG(pixels[i][j].getG() > max_color ? max_color : pixels[i][j].getG());
+
+
+            pixels[i][j].setB(5*temp[i][j].getB() - temp[i-1][j-1].getB()  
+                         - temp[i-1][j+1].getB() - temp[i+1][j-1].getB() - temp[i+1][j+1].getB());
+            pixels[i][j].setB(pixels[i][j].getB() < 0 ? 0 : pixels[i][j].getB()); 
+            pixels[i][j].setB(pixels[i][j].getB() > max_color ? max_color : pixels[i][j].getB());
+        }
+    }
+}
