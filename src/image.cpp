@@ -142,6 +142,9 @@ void Image::imgRotate(int angle) {
         pixels = rotate90(temp);
         temp = rotate90(pixels);
         pixels = temp;
+    } else {
+        std:: cout << "Invalid" << std::endl;
+        exit(0);
     }
 }
 

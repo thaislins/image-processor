@@ -1,6 +1,4 @@
 #include <iostream>
-using std::cout;
-
 #include <fstream>
 #include <vector>
 
