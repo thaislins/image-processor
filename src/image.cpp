@@ -158,7 +158,7 @@ matrix Image::rotate90(matrix temp) {
     return pixels;
 }
 
-void Image::borderDetection() {
+void Image::extraFilter() {
     Pixel p;
     matrix temp(number_rows,vector<Pixel>(number_cols, p));
 

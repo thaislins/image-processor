@@ -17,8 +17,8 @@ void menu(Image &ppm_image, string &filter){
         std::cin >> angle;
         filter = filter + std::to_string(angle);
         ppm_image.imgRotate(angle);
-    } else if (filter.compare ("border-detect") == 0) {
-        ppm_image.borderDetection();
+    } else if (filter.compare ("extra-filter") == 0) {
+        ppm_image.extraFilter();
     } else {
         std::cout << "Unidentified filter" << std::endl;
         exit(0);

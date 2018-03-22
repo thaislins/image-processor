@@ -35,7 +35,7 @@ public:
     void imgSharpening();
     void imgRotate(int angle);
     matrix rotate90(matrix temp);
-    void borderDetection();
+    void extraFilter();
 };
 
 #endif
