@@ -14,7 +14,7 @@
 
 ```
 make all
-./bin/ppmprocessor "image_name.ppm "filter_name" 
+./bin/ppmprocessor "image_name.ppm" "filter_name" 
 ```
 
 ### Available Filters
@@ -23,6 +23,6 @@ make all
 thresh         -- Image Thresholding
 blurr          -- Image Blurring
 sharp          -- Image Sharpening
-rotate 	    -- Image Rotation (90°, 180° or 270°)
+rotate 	       -- Image Rotation (90°, 180° or 270°)
 extra-filter   -- Adds an extra filter to the image
 ```

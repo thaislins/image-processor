@@ -9,9 +9,9 @@ Image::Image() {
 
 }     
 
-Image::Image(int numRows, int numCols, int maxColor) {
-    number_rows = numRows;
-    number_cols = numCols;
+Image::Image(int height, int width, int maxColor) {
+    this->height = height;
+    this->width = width;
     max_color = maxColor;  
 }     
 
@@ -19,20 +19,20 @@ Image::~Image() {
 
 }    
 
-int Image::getNumberRows() {
-    return number_rows;
+int Image::getHeight() {
+    return height;
 }
 
-void Image::setNumberRows(int numRows) {
-    number_rows = numRows;
+void Image::setHeight(int height) {
+    this->height = height;
 }
 
-int Image::getNumberCols() {
-    return number_cols;
+int Image::getWidth() {
+    return width;
 }
 
-void Image::setNumberCols(int numCols) {
-    number_cols = numCols;
+void Image::setWidth(int width) {
+    this->width = width;
 }
 
 int Image::getMaxColor() {
@@ -52,8 +52,8 @@ void Image::setPixels(matrix pix) {
 }
 
 void Image::copy_pixels(matrix &temp, matrix &old) {
-    for (int i = 0; i < number_rows; ++i) {
-        for (int j = 0; j < number_cols; ++j) {
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
             temp[i][j].setR(old[i][j].getR());
             temp[i][j].setG(old[i][j].getG());
             temp[i][j].setB(old[i][j].getB());
@@ -62,8 +62,8 @@ void Image::copy_pixels(matrix &temp, matrix &old) {
 }
 
 void Image::imgThresholding() {
-    for (int i = 0; i < number_rows; ++i) {
-        for (int j = 0; j < number_cols; ++j){
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j){
             int rgb_value = 0;
             if (((pixels[i][j].getR() + pixels[i][j].getG() + pixels[i][j].getB())/3) > 127) {
                 rgb_value = max_color;
@@ -78,12 +78,12 @@ void Image::imgThresholding() {
 
 void Image::imgBlurring() {
     Pixel p;
-    matrix temp(number_rows,vector<Pixel>(number_cols, p));
+    matrix temp(height,vector<Pixel>(width, p));
 
     copy_pixels(temp, pixels);
 
-    for (int i = 1; i < number_rows - 1; ++i) {
-        for (int j = 1; j < number_cols - 1; ++j) { 
+    for (int i = 1; i < height - 1; ++i) {
+        for (int j = 1; j < width - 1; ++j) { 
             pixels[i][j].setR((temp[i][j].getR() + temp[i-1][j-1].getR() + temp[i-1][j].getR() + 
              temp[i-1][j+1].getR() + temp[i][j-1].getR() + temp[i][j+1].getR() +
              temp[i+1][j-1].getR() + temp[i+1][j].getR() + temp[i+1][j+1].getR())/9);
@@ -101,12 +101,12 @@ void Image::imgBlurring() {
 
 void Image::imgSharpening() {
     Pixel p;
-    matrix temp(number_rows,vector<Pixel>(number_cols, p));
+    matrix temp(height,vector<Pixel>(width, p));
 
     copy_pixels(temp, pixels);
 
-    for (int i = 1; i < number_rows - 1; ++i) {
-        for (int j = 1; j < number_cols - 1; ++j) { 
+    for (int i = 1; i < height - 1; ++i) {
+        for (int j = 1; j < width - 1; ++j) { 
             pixels[i][j].setR(5*temp[i][j].getR() - temp[i-1][j-1].getR()  
              - temp[i-1][j+1].getR() - temp[i+1][j-1].getR() - temp[i+1][j+1].getR());
             pixels[i][j].setR(pixels[i][j].getR() < 0 ? 0 : pixels[i][j].getR()); 
@@ -128,7 +128,7 @@ void Image::imgSharpening() {
 
 void Image::imgRotate(int angle) {
     Pixel p;
-    matrix temp(number_rows,vector<Pixel>(number_cols, p));
+    matrix temp(height,vector<Pixel>(width, p));
 
     copy_pixels(temp, pixels);
 
@@ -149,9 +149,9 @@ void Image::imgRotate(int angle) {
 }
 
 matrix Image::rotate90(matrix temp) {
-    for (int i = 1; i < number_rows - 1; ++i) {
-        for (int j = 1; j < number_cols - 1; ++j) { 
-            pixels[i][j] = temp[number_rows-j-1][i];
+    for (int i = 1; i < height - 1; ++i) {
+        for (int j = 1; j < width - 1; ++j) { 
+            pixels[i][j] = temp[height-j-1][i];
         }
     }
 
@@ -160,12 +160,12 @@ matrix Image::rotate90(matrix temp) {
 
 void Image::extraFilter() {
     Pixel p;
-    matrix temp(number_rows,vector<Pixel>(number_cols, p));
+    matrix temp(height,vector<Pixel>(width, p));
 
     copy_pixels(temp, pixels);
 
-    for (int i = 1; i < number_cols - 1; ++i) {
-        for (int j = 1; j < number_rows - 1; ++j) { 
+    for (int i = 1; i < width - 1; ++i) {
+        for (int j = 1; j < height - 1; ++j) { 
             pixels[i][j].setR(8*temp[i][j].getR() - temp[i-1][j-1].getR()  
              - temp[i-1][j+1].getR() - temp[i+1][j-1].getR() - temp[i+1][j+1].getR());
             pixels[i][j].setR(pixels[i][j].getR() < 0 ? 0 : pixels[i][j].getR()); 

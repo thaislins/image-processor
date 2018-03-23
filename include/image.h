@@ -10,8 +10,8 @@ using std::vector;
 
 class Image {
 protected:
-    int number_rows;                            // number of rows 
-    int number_cols;                             // number of columns 
+    int width;                             // number of columns 
+    int height;                            // number of rows 
     int max_color;                            // number of gray levels 
     matrix pixels;                     //2D array
 
@@ -20,10 +20,10 @@ public:
     Image(int numRows, int numCols, int maxColor);   
     ~Image();                                 
 
-    int getNumberRows();
-    void setNumberRows(int numRows);
-    int getNumberCols();
-    void setNumberCols(int numCols);
+    int getHeight();
+    void setHeight(int numRows);
+    int getWidth();
+    void setWidth(int numCols);
     int getMaxColor();
     void setMaxColor(int maxColor);
     matrix getPixels();

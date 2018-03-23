@@ -10,12 +10,12 @@ void PPMWriter::writeFile(matrix pixels) {
     image_file.open(filename, std::ios::binary);
 
     image_file << "P3" << "\n";
-    image_file << new_image.getNumberCols() << "\n";
-    image_file << new_image.getNumberRows() << "\n"; 
+    image_file << new_image.getWidth() << "\n";
+    image_file << new_image.getHeight() << "\n"; 
     image_file << new_image.getMaxColor() << "\n";
 
-    for(int i = 0; i < new_image.getNumberRows(); ++i) {
-        for(int j = 0; j < new_image.getNumberCols(); ++j){
+    for(int i = 0; i < new_image.getHeight(); ++i) {
+        for(int j = 0; j < new_image.getWidth(); ++j){
             image_file << pixels[i][j].getR() << " ";
             image_file << pixels[i][j].getG() << " ";
             image_file << pixels[i][j].getB() << " ";

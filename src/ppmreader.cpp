@@ -11,7 +11,9 @@ PPMReader::PPMReader(string f_name) {
 }
 
 Image PPMReader::readFile() {
-    int number_cols, number_rows, max_color;
+    int width;    //width
+    int height;    //height
+    int max_color;
     std::string header;
     int R, G, B;
     Pixel p;
@@ -23,12 +25,12 @@ Image PPMReader::readFile() {
         exit(1);
     }
 
-    image_file >> header >> number_rows >> number_cols >> max_color;
-    Image ppm_image(number_rows,number_cols,max_color);
-    matrix pixels(number_rows,vector<Pixel>(number_cols, p));
+    image_file >> header >> width >> height >> max_color;
+    Image ppm_image(height,width,max_color);
+    matrix pixels(height,vector<Pixel>(width, p));
 
-    for(int i = 0; i < number_rows; ++i) {
-        for(int j = 0; j < number_cols; ++j){
+    for(int i = 0; i < height; ++i) {
+        for(int j = 0; j < width; ++j){
             image_file >> R >> G >> B;
             pixels[i][j].setR(R);
             pixels[i][j].setG(G);
